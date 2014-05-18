@@ -1,0 +1,137 @@
+#google_search_snippet {
+	font-family: arial,sans-serif;
+	width: 528px;
+	background-color: #fff;
+	padding: 4px 16px;
+	margin-bottom: 16px;
+}
+
+#google_search_snippet h3 {
+	font-style: normal;
+	font-weight: bold;
+	color: #1122CC;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: medium;
+	font-family: arial,sans-serif;
+	text-decoration: underline;
+	margin-bottom: 4px;
+	overflow: hidden;
+}
+
+#google_search_snippet div.google_search_url {
+	font-size: 14px !important;
+	display: inline-block;
+	color: #009933;
+	font-style: normal;
+	white-space: nowrap;
+	font-family: arial,sans-serif;
+	font-size: small;
+	font-weight: normal;
+}
+
+/* hidden literal field for site title */
+#ss_siteconfig_title {
+	display: none;
+}
+
+#Root_SEO div#Options ul.ui-tabs-nav {
+	float: left;
+}
+
+
+/* five-star css */
+div#fivestar-widget {
+	display: block;
+	clear: both;
+}
+div#fivestar-widget div.star {
+	float: left;
+	height: 15px;
+	overflow: hidden;
+	width: 17px;
+	text-indent: -999em;
+	background: url("../images/star.png") no-repeat scroll 0 0 transparent;
+	text-decoration: none;    
+}
+div#fivestar-widget div.on {
+	background-position: 0 -32px;
+}
+div#fivestar-widget div.on.half {
+	background-position: 0 -16px;
+}
+
+h5.seo_score {
+	margin-bottom: 4px;
+	margin-top: 4px;
+}
+div.score_clear {
+	clear: both;
+	height: 10px;
+}
+
+ul#seo_score_tips {
+	list-style: circle;
+	margin: 14px;
+}
+ul#seo_score_tips li {
+	color: #f00;
+	margin-bottom: 4px;
+}
+
+/* Simple tests */
+.subjtest_yes, .subjtest_no {
+	display: inline-block;
+	font-weight: bold;
+	background-color: green;
+	color: white;
+	padding: 1px 6px;
+	margin-top: 2px;
+	-webkit-border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	border-radius: 3px; 
+}
+.subjtest_no {
+	background-color: red;
+}
+
+/* Siteconfig tips */
+table.seoanalysis td.score {
+	width: 20px;
+	height: 18px;
+	padding-left: 10px;
+}
+
+table.seoanalysis td {
+	font-size: 13px;
+	line-height: 16px;
+	margin: 5px 0;
+}
+.seo_score_img {
+	display: inline-block;
+	margin: 3px 0 0 0;
+	width: 16px;
+	height: 16px;
+	background-image: url(../images/score_buttons.png);
+	background-repeat: no-repeat;
+	padding: 0 0 0 0;
+	vertical-align: bottom;
+}
+.seo_score_img.good {
+	background-position: -2px -2px;
+}
+.seo_score_img.ok {
+	background-position: -25px -2px;
+}
+.seo_score_img.poor {
+	background-position: -121px -2px;
+}
+.seo_score_img.bad {
+	background-position: -49px -2px;
+}
+.seo_score_img.na {
+	background-position: -74px -2px;
+}
+.seo_score_img.noindex {
+	background-position: -146px -2px;
+}

@@ -1,0 +1,9 @@
+---
+name: 'seoextensions'
+---
+SiteTree:
+  extensions:
+    0: 'SeoSiteTreeExtension'
+SiteConfig:
+  extensions:
+    0: 'SeoSiteConfigExtension'

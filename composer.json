@@ -1,0 +1,21 @@
+{
+	"name": "micschk/saas-seo",
+	"description": "SEO optimizations for Silverstripe",
+	"type": "silverstripe-module",
+	"homepage": "https://github.com/micschk/saas-seo",
+	"keywords": ["silverstripe", "seo", "meta", "metatitle"],
+	"authors": [
+		{
+			"name": "Michael van Schaik",
+			"email": "mic@restruct.nl"
+		}
+	],
+	"license": "BSD-3-Clause",
+	"support": {
+		"issues": "https://github.com/micschk/saas-seo/issues"
+	},
+	"require": {
+		"silverstripe/framework": "~3.1",
+		"silverstripe/cms": "~3.1"
+	}
+}
