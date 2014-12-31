@@ -76,7 +76,7 @@ Place the module dir in your website root and run /dev/build?flush=all
 - [ ] Translations to other languages
 - [ ] Check for page subject usage in other pages
 - [ ] Check how many times the page subject has been used and give feedback to user
-- [x] (Re)Calculate SEO Score in realtime with javascript without need to save first
+- [x] Recalculate SEO Score in realtime with javascript without need to save first
 - [x] Put html in cms defined in methods in template files
 - [ ] Check extra added db fields/ many_many DataObjects for SEO score and make this configurable
 
