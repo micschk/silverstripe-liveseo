@@ -1,4 +1,4 @@
-<!-- Optimized with the SaaSite SEO module $SEO.Version (score $SEOPageScore) - http://saasite.nl -->
+<!-- Optimized with the Silverstripe SEO module $SEO.Version (score $SEOPageScore) -->
 <link rel="canonical" href="$AbsoluteLink" />
 <% if $SEOGplusAuthorlink %><link rel="author" href="$SEOGplusAuthorlink"/><% end_if %>
 <% if $SEOGplusPublisherlink %><link rel="publisher" href="$SEOGplusPublisherlink"/><% end_if %>
@@ -14,4 +14,4 @@
 <meta property="article:published_time" content="$Created.Rfc3339" />
 <meta property="article:modified_time" content="$LastEdited.Rfc3339" />
 <% if $SEOMetaRobotsSettings %><meta name="robots" content="$SEOMetaRobotsSettings" /><% end_if %>
-<!-- / SaaSite SEO module. -->
+<!-- / Silverstripe SEO module. -->

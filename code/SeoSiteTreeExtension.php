@@ -60,6 +60,7 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 		} else {
 			$TitleTemplate = "page_title + ' &raquo; ' + siteconfig_title";
 		}
+		
 		$jsvars = array(
 			"TitleTemplate" => $TitleTemplate,
 		);
@@ -77,7 +78,6 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 					'<div id="google_search_snippet"></div>'),
 			LiteralField::create('siteconfigtitle', 
 					'<div id="ss_siteconfig_title">' . $this->owner->getSiteConfig()->Title . '</div>'),
-			
 		));
 
 		// move Metadata field from Root.Main to SEO tab for visualising direct impact on search result
@@ -121,21 +121,6 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 //		))));
 		//Debug::dump( SSViewer::get_theme_folder() );
 //		$pagehtml = $this->owner->renderwith(array('Footer'));
-		
-		// parse out the title tag as used by the theme;
-		$loader = SS_TemplateLoader::instance();
-		$theme = Config::inst()->get('SSViewer', 'theme');
-		$foundpath  = $loader->findTemplates("main/Page", $theme);
-		$path = $foundpath['main'];
-		$templatecode = file_get_contents($path);
-		//Debug::dump($path);
-		$titlehtml = explode('<title>', $templatecode );
-		$titlehtml = array_pop( $titlehtml );
-		$titlehtml = explode('</title>', $titlehtml );
-		$titlehtml = array_shift( $titlehtml );
-		//Debug::dump($titlehtml);
-		$template = SSViewer::fromString($titlehtml);
-		$fulltitle = $template->process($this->owner);
 		
 		$fields->addFieldsToTab('Root.SEO.Options.HelpAndSEOScore', array(
 //			LiteralField::create('TitleHTML', '<h4>'.$fulltitle.'</h4>'),
