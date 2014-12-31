@@ -1,6 +1,18 @@
 <?php
 
 class SeoSiteTreeExtension extends SiteTreeExtension {
+	
+	/**
+	 * Specify page types that will not include the SEO tab
+	 *
+	 * @config
+	 * @var array
+	 */
+	private static $excluded_page_types = array(
+		'ErrorPage',
+		'RedirectorPage',
+		'VirtualPage'
+	);
 
 	private static $db = array(
 		'MetaTitle' => 'Varchar(255)',
@@ -31,6 +43,12 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 	 * @return none
 	 */
 	public function updateCMSFields(FieldList $fields) {
+		
+		// exclude SEO tab from some pages
+		if (in_array($this->owner->getClassName(), 
+				Config::inst()->get("SeoSiteTreeExtension", "excluded_page_types"))) {
+			return;
+		}
 
 		Requirements::css(SEO_DIR.'/css/seo.css');
 		Requirements::javascript(SEO_DIR.'/javascript/seo.js');
@@ -54,15 +72,14 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 		$fields->removeByName('Metadata');
 		
 		// Create SEO tabs
-		$fields->addFieldToTab("Root.SEO", new TabSet('Options', 
-			new Tab('Metadata', _t('SEO.SEOGeneral', 'General')), 
-			new Tab('HelpAndSEOScore',  _t('SEO.SEOScoreAndTips', 'SEO Score and Tips')), 
-			new Tab('Advanced',  _t('SEO.Advanced', 'Advanced')), 
-			new Tab('Social',  _t('SEO.Social', 'Social'))
-		)); 
+		$fields->addFieldToTab("Root.SEO", new TabSet('Options'));
+		$fields->findOrMakeTab('Root.SEO.Options.HelpAndSEOScore',_t('SEO.SEOScoreAndTips', 'SEO Score and Tips'));
+		$fields->findOrMakeTab('Root.SEO.Options.Meta',_t('SEO.SEOMetaData', 'Metadata'));
+		$fields->findOrMakeTab('Root.SEO.Options.Social',_t('SEO.Social', 'Social'));
+		$fields->findOrMakeTab('Root.SEO.Options.Advanced',_t('SEO.Advanced', 'Advanced'));
 		
 		// ADD metadata fields
-		$fields->addFieldsToTab('Root.SEO.Options.Metadata', array(
+		$fields->addFieldsToTab('Root.SEO.Options.Meta', array(
 			// METATITLE (re-add)
 			TextField::create("MetaTitle", 
 				_t('SEO.SEOMetaTitle', 'Meta title')
@@ -109,7 +126,7 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 		$fulltitle = $template->process($this->owner);
 		
 		$fields->addFieldsToTab('Root.SEO.Options.HelpAndSEOScore', array(
-			LiteralField::create('TitleHTML', '<h4>'.$fulltitle.'</h4>'),
+//			LiteralField::create('TitleHTML', '<h4>'.$fulltitle.'</h4>'),
 			LiteralField::create('ScoreTitle', '<h4 class="seo_score">' . _t('SEO.SEOScore', 'SEO Score') . '</h4>'),
 			LiteralField::create('Score', $this->getHTMLStars()),
 			HiddenField::create('SEOPageScore', $this->owner->SEOPageScore),
@@ -163,16 +180,20 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 					_t('SEO.MetaRobotsNoSnippet','Prevent showing a snippet of this page in the search results (also prevents caching)')),
 		));
 		
+		
 	}
 	
-	public function SEOMetaTags( $inclTitle ){
+	public function MetaTags( & $tags ){
 		
-		$baseMeta = $this->owner->MetaTags( $inclTitle );
-		// add SEO meta
 		$extraMeta = $this->owner->renderWith('SeoMeta');
-		// add some extra HTTP headers
+		$tags .= $extraMeta;
 		
-		return $baseMeta.$extraMeta;
+		// TODO: move these extra HTTP headers to controller & use Silverstripe request object?
+		// eg: $this->owner->request->addHeader('X-test','value');
+		header( 'Link: <'.$this->owner->AbsoluteLink().'>; rel="canonical"' );
+		if($seorobotsdirective = $this->SEOMetaRobotsSettings()){
+			header( 'X-Robots-Tag: '.$seorobotsdirective );
+		}
 		
 	}
 	

@@ -1,9 +1,18 @@
 ---
-name: 'seoextensions'
+Name: 'seoextensions'
 ---
 SiteTree:
   extensions:
-    0: 'SeoSiteTreeExtension'
+    - 'SeoSiteTreeExtension'
 SiteConfig:
   extensions:
-    0: 'SeoSiteConfigExtension'
+    - 'SeoSiteConfigExtension'
+
+# optimize some other modules
+GoogleSitemap:
+  google_notification_enabled: true
+  
+# Example of how to exclude extra page types from showing the SEO tab:
+# SeoSiteTreeExtension:
+#   excluded_page_types:
+#     - 'SomePage'
