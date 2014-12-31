@@ -14,6 +14,11 @@
 				set_preview_google_search_result();
 				calc_score_n_tips();
 			},
+			// extra: for live update on selecting a suggestion
+			onchange : function() {
+				set_preview_google_search_result();
+				calc_score_n_tips();
+			},
 		});
 
 	});
@@ -63,7 +68,7 @@
 			siteconfig_title = $('#ss_siteconfig_title').html();
 
 			// build google search preview
-			var google_search_title = page_title + ' &raquo; ' + siteconfig_title;
+			var google_search_title = $TitleTemplate;
 			var google_search_url = page_url_basehref + page_url_segment;
 			var google_search_description = page_metadata_description;
 
@@ -74,6 +79,18 @@
 
 			$('#google_search_snippet').html(search_result_html);
 	}
+	
+	// prototype to check if a string contains multiple words (in no particular order)
+	String.prototype.containsallwords = function(word_str) {
+		// Todo: split into synonyms on ',' and allow any, eg 'dog feed, pet food, animal snack'
+		var word_arr = word_str.split(" ");
+		for (var i = 0; i < word_arr.length; i++) {
+			if (this.indexOf(word_arr[i]) == -1) {
+				return false;
+			}
+		}
+		return true;
+	};
 
 	function calc_score(){
 
@@ -109,7 +126,7 @@
 		//$('#simple_pagesubject_test, #simple_pagesubject_test_title').hide();
 
 		// check pagesubject in title
-		if(PageTitle.search(SEOPageSubject)>=0){
+		if(PageTitle.containsallwords(SEOPageSubject)){
 			score += 10;
 			$('.subjtest_pagetitle .subjtest').hide().filter('.subjtest_yes').show();
 			$('#pagesubject_in_title').hide();
@@ -119,7 +136,7 @@
 		}
 
 		// check pagesubject in first paragraph
-		if(FirstParagraph.search(SEOPageSubject)>=0){
+		if(FirstParagraph.containsallwords(SEOPageSubject)){
 			score += 10;
 			$('.subjtest_firstpar .subjtest').hide().filter('.subjtest_yes').show();
 			$('#pagesubject_in_firstparagraph').hide();
@@ -129,14 +146,14 @@
 		}
 
 		// check pagesubject in content (just an extra check, score calculated in first paragraph)
-		if(PageContent.search(SEOPageSubject)>=0){
+		if(PageContent.containsallwords(SEOPageSubject)){
 			$('.subjtest_pagecontent .subjtest').hide().filter('.subjtest_yes').show();
 		} else {
 			$('.subjtest_pagecontent .subjtest').hide().filter('.subjtest_no').show();
 		}
 
 		// check pagesubject in url
-		if(PageURL.search(SEOPageSubject)>=0){
+		if(PageURL.containsallwords(SEOPageSubject)){
 			score += 10;
 			$('.subjtest_pageurl .subjtest').hide().filter('.subjtest_yes').show();
 			$('#pagesubject_in_url').hide();
@@ -146,7 +163,7 @@
 		}
 
 		// check pagesubject in metatitle
-		if(PageMetaTitle.search(SEOPageSubject)>=0){
+		if(PageMetaTitle.containsallwords(SEOPageSubject)){
 			score += 5;
 			$('.subjtest_metatitle .subjtest').hide().filter('.subjtest_yes').show();
 			$('#pagesubject_in_metatitle').hide();
@@ -156,7 +173,7 @@
 		}
 
 		// check pagesubject in metadescription
-		if(PageMetaDescription.search(SEOPageSubject)>=0){
+		if(PageMetaDescription.containsallwords(SEOPageSubject)){
 			score += 5;
 			$('.subjtest_metadescr .subjtest').hide().filter('.subjtest_yes').show();
 			$('#pagesubject_in_metadescription').hide();

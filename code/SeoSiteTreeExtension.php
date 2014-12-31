@@ -51,7 +51,19 @@ class SeoSiteTreeExtension extends SiteTreeExtension {
 		}
 
 		Requirements::css(SEO_DIR.'/css/seo.css');
-		Requirements::javascript(SEO_DIR.'/javascript/seo.js');
+		//Requirements::javascript(SEO_DIR.'/javascript/seo.js');
+		
+		// Get title template
+		$sc = SiteConfig::current_site_config();
+		if($sc->SEOTitleTemplate){
+			$TitleTemplate = $sc->SEOTitleTemplate;
+		} else {
+			$TitleTemplate = "page_title + ' &raquo; ' + siteconfig_title";
+		}
+		$jsvars = array(
+			"TitleTemplate" => $TitleTemplate,
+		);
+		Requirements::javascriptTemplate(SEO_DIR.'/javascript/seo.js', $jsvars);
 
 		// better do this below in some init method? :
 //		$this->getSEOScoreCalculation(); 
