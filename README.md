@@ -74,7 +74,7 @@ Place the module dir in your website root and run /dev/build?flush=all
 - [ ] Create a google webmaster code config 
 - [ ] Only check for outgoing links in content ommit links within site
 - [ ] Translations to other languages
-- [ ] Check for page subject usage in other pages 
+- [ ] Check for page subject usage in other pages
 - [ ] Check how many times the page subject has been used and give feedback to user
 - [x] (Re)Calculate SEO Score in realtime with javascript without need to save first
 - [x] Put html in cms defined in methods in template files
