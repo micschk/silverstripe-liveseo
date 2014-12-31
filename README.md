@@ -1,16 +1,20 @@
 # SEO optimizations for Silverstripe
 
-- Real-time in-cms SEO page analysis with tips & score (no need to save/refresh)
-- May contain parts of Yoast's WP SEO plugin
-- Contains parts of Bart's/30's Silverstripe SEO plugin
+- Real-time in-CMS SEO page analysis with tips & score (moved to js, no need to save/refresh)
+- Configurable Title template for search snippet visualisation (from within siteconfig)
+- Multiple keyword support in no particular order (eg "dogs drinking beer" = "drinking my beer while watching the dog")
+- Checks & suggests installs of other modules that are good for SEO (GoogleSitemap)
+- Auto-set GoogleSitemap::google_notification_enabled(true) if available
+- Added support for Facebook & Google+ author markup
+- Added support for in-page meta robots settings
+- Added some additional tests & tips from Yoast's WP SEO plugin
+- Largely based on Bart's/30's Silverstripe SEO plugin (basically half of this plugin)
 - Re-adds the 'MetaTitle' field that was removed in SilverStripe 3.1 (thanks to Loz Calver)
 
 ## Maintainer Contacts
 
-* Bart van Irsel (Nickname: hubertusanton)
-* [Dertig Media](http://www.30.nl)
-* Michael van Schaik (Nickname: micschk)
-* [Restruct](http://restruct.nl)
+* Bart van Irsel (Nickname: hubertusanton) [Dertig Media](http://www.30.nl)
+* Michael van Schaik (Nickname: micschk) [Restruct](http://restruct.nl)
 
 ##Notes:##
 
@@ -48,9 +52,10 @@ This is done for giving a realtime preview on the google search result of the pa
 
 In seo.yml config file you can specify which classes will NOT use the module. 
 By default every class extending Page will use the SEO module.
+
 Caution: The new master branch is not compatible with old releases see [this pull request](https://github.com/hubertusanton/silverstripe-seo/pull/10) from [jonom](https://github.com/jonom) (thanks!).
-Please use tag 1.1 in old sites with the old config and tag 2.0 for new projects, but updating to 2.0 will also fix google suggest and
-has some other fixes.
+
+Please use tag 1.1 in old sites with the old config and tag 2.0 for new projects, but updating to 2.0 will also fix google suggest and has some other fixes.
 
 
 ## Screenshots
@@ -64,6 +69,7 @@ Place the module dir in your website root and run /dev/build?flush=all
 ## TODO's for next versions
 
 - [ ] Check img tags for title and alt tags
+- [ ] Add support for keyword synonyms
 - [x] Option to set social networking title and images for sharing of page on facebook and google plus
 - [ ] Create a google webmaster code config 
 - [ ] Only check for outgoing links in content ommit links within site
