@@ -1,29 +1,30 @@
 {
-	"name": "micschk/silverstripe-seo",
+	"name": "micschk/silverstripe-liveseo",
 	"description": "SEO optimizations module for Silverstripe",
 	"type": "silverstripe-module",
-	"homepage": "http://github.com/micschk/silverstripe-seo",
+	"homepage": "http://github.com/micschk/silverstripe-liveseo",
 	"keywords": ["silverstripe", "seo", "meta", "metatitle"],
 	"authors": [
 		{
-			"name": "Bart van Irsel",
+			"name": "Bart van Irsel (original silverstripe-seo)",
 			"email": "bart@30.nl"
 		},
 		{
-			"name": "Michael van Schaik",
+			"name": "Michael van Schaik (this 'live' fork)",
 			"email": "mic@restruct.nl"
 		}
 	],
 	"license": "BSD-3-Clause",
 	"support": {
-		"issues": "http://github.com/micschk/silverstripe-seo/issues"
+		"issues": "http://github.com/micschk/silverstripe-liveseo/issues"
 	},
 	"require": {
 		"silverstripe/framework": "~3.1",
 		"silverstripe/cms": "~3.1"
 	},
 	"extra": {
-		"installer-name": "seo",
+		"installer-name": "liveseo",
+		"replaces": "seo",
 		"screenshots": [
 			"images/screen2.png",
 			"images/screen3.png"
