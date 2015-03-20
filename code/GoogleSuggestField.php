@@ -3,9 +3,9 @@
  * Field which gets suggestions from google search
  */
 class GoogleSuggestField extends FormField {
-	
+
 	public function Field($properties = array()) {
-		
+
 		Requirements::customScript(<<<JS
 
  			(function($) {
@@ -32,7 +32,7 @@ class GoogleSuggestField extends FormField {
 								},
 								minLength: 3
 							});
-	
+
 						},
 					});
 				});
