@@ -24,9 +24,9 @@ de:
     SEOScoreTipContentHasSubtitles: 'De inhoud van de pagina bevat geen subtitels'
     SEOScoreTipImageAltTitle: '<span id="seoimgtipalt">x</span> images zonder ALT tekst of title'
     SEOScoreTipImageKeywordInAltTitle: 'Pagina onderwerp ontbreekt in de ALT of title van <span id="seoimgtipkeyword">x</span> images op deze pagina'
-    SEOScore: 'SEO Score'     
-    SEOScoreTips: 'SEO Score Tips'    
-    SEOPageSubjectTitle: 'Onderwerp van deze pagina (vereist om SEO score te gebruiken)'  
+    SEOScore: 'SEO Score'
+    SEOScoreTips: 'SEO Score Tips'
+    SEOPageSubjectTitle: 'Onderwerp van deze pagina (vereist om SEO score te gebruiken)'
     SEOYes: 'Ja'
     SEONo: 'Nee'
     SEOSubjectCheckFirstParagraph: 'Eerste paragraaf:'
@@ -65,23 +65,23 @@ de:
 #<<<<<<< HEAD
 #    SEOScoreTipPageSubjectInMetaTitle: 'Das Hauptkeyword fehlt in der Seiten metatitel'
 #    SEOScoreTipPageSubjectInMetaDescription: 'Das Hauptkeyword fehlt in der Seitenbeschreibung (descrition)'
-#    SEOScoreTipNumwordsContentOk: 'Der Inhalt der Seite ist zu gering. Erstellen Sie mindestens 300 Wörter Text, inhaltlich basierend auf dem hauptkeyword.'       
+#    SEOScoreTipNumwordsContentOk: 'Der Inhalt der Seite ist zu gering. Erstellen Sie mindestens 300 Wörter Text, inhaltlich basierend auf dem hauptkeyword.'
 #=======
 #    SEOScoreTipPageSubjectInMetaDescription: 'Das Hauptkeyword fehlt in der Seitenbeschreibung (descrition)'
-#    SEOScoreTipNumwordsContentOk: 'Der Inhalt der Seite ist zu gering. Erstellen Sie mindestens 250 Wörter Text, inhaltlich basierend auf dem hauptkeyword.'       
+#    SEOScoreTipNumwordsContentOk: 'Der Inhalt der Seite ist zu gering. Erstellen Sie mindestens 250 Wörter Text, inhaltlich basierend auf dem hauptkeyword.'
 #>>>>>>> upstream/master
 #    SEOScoreTipPageTitleLengthOk: 'Der Seitentitel ist zu kurz. Er sollte mindestens 40 Zeichen lang sein.'
 #    SEOScoreTipContentHasLinks: 'Der Inhalt der Seite verfügt über keine (ausgehenden) Links.'
 #    SEOScoreTipPageHasImages: 'Die Seite verfügt über keine Bilder.'
-#    SEOScoreTipContentHasSubtitles: 'Die Seitengliederung verfügt über keine Zwischenüberschriften (H2-H6)'  
+#    SEOScoreTipContentHasSubtitles: 'Die Seitengliederung verfügt über keine Zwischenüberschriften (H2-H6)'
 #<<<<<<< HEAD
 #    SEOScoreTipImageAltTitle: '<span id="seoimgtipalt">x</span> images missing ALT text or title'
 #    SEOScoreTipImageKeywordInAltTitle: 'Page subject missing in the ALT or title of <span id="seoimgtipkeyword">x</span> images on this page'
 #=======
 #>>>>>>> upstream/master
 #    SEOScore: 'Ihr SEO-Score'
-#    SEOScoreTips: 'SEO-Score Hilfe'    
-#    SEOPageSubjectTitle: 'Subject of this page (required to view this page SEO score)'  
+#    SEOScoreTips: 'SEO-Score Hilfe'
+#    SEOPageSubjectTitle: 'Subject of this page (required to view this page SEO score)'
 #    SEOYes: 'Ja'
 #    SEONo: 'Nein'
 #    SEOSubjectCheckFirstParagraph: 'Erster Absatz:'
@@ -91,7 +91,7 @@ de:
 #<<<<<<< HEAD
 #    SEOSubjectCheckPageMetaTitle: 'Seiten metatitel:'
 #    SEOSubjectCheckPageMetaDescription: 'Seitenbeschreibung (description):'
-#    SEOSubjectCheckIntro: 'Ihre Seite Thema wurde gefunden in:' 
+#    SEOSubjectCheckIntro: 'Ihre Seite Thema wurde gefunden in:'
 #    SEOFBdescription: 'Facebook description'
 #    SEOFBdescriptionHelp: 'Wanneer je niet de metabeschrijving wil gebruiken voor het delen van berichten op Facebook, maar een andere omschrijving wil, schrijf het dan hier.'
 #=======

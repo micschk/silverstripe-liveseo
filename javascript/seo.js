@@ -1,4 +1,3 @@
-
 (function($) {
 
 	$.entwine('ss', function($){
@@ -206,8 +205,25 @@
 			$('#content_has_subtitles').show();
 		}
 
+		// check for provided images or links outside of the main content via
+		// SeoInformationProvider interface
+		var extraInfoElement = $('#providedInfo');
+		var hasLinks = false;
+		var hasImages = false;
+
+		if (extraInfoElement.length > 0) {
+			if (extraInfoElement.attr('data-has-images')) {
+				hasImages = true;
+			}
+
+			if (extraInfoElement.attr('data-has-links')) {
+				hasLinks = true;
+			}
+		}
+
+
 		// check links
-		if(EditorContent.search('<a')>=0){
+		if(hasLinks || EditorContent.search('<a')>=0){
 			score += 10;
 			$('#content_has_links').hide();
 		} else {
@@ -215,7 +231,7 @@
 		}
 
 		// check images
-		if(EditorContent.search('<img')>=0){
+		if(hasImages || EditorContent.search('<img')>=0){
 			score += 10;
 			$('#page_has_images').hide(); // hide "page doesn't have images"
 		} else {
