@@ -42,6 +42,8 @@ class SeoSiteConfigExtension extends DataExtension {
 			$templatetag = array_pop( $templatetag );
 			$templatetag = explode('</title>', $templatetag );
 			$templatetag = array_shift( $templatetag );
+		} else {
+			$templatetag = false;
 		}
 //		$template = SSViewer::fromString($titlehtml);
 //		$fulltitle = $template->process($this->owner);
