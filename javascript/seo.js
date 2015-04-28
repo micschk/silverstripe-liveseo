@@ -102,7 +102,7 @@
 				//console.log(EditorContent);
 		var FirstParagraph = $(EditorContent).filter('p').first().text().toLowerCase();
 		var PageContent = $(EditorContent).text().toLowerCase();
-		var PageURL = $('input[name="URLSegment"]').attr('data-prefix').toLowerCase();
+		var PageURL = $('input[name="URLSegment"]').val().toLowerCase();
 		var PageMetaTitle = $('input[name="MetaTitle"]').val().toLowerCase();
 		var PageMetaDescription = $('textarea[name="MetaDescription"]').val().toLowerCase();
 
