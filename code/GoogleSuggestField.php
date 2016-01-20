@@ -2,11 +2,12 @@
 /**
  * Field which gets suggestions from google search
  */
-class GoogleSuggestField extends FormField {
-	
-	public function Field($properties = array()) {
-		
-		Requirements::customScript(<<<JS
+class GoogleSuggestField extends FormField
+{
+    
+    public function Field($properties = array())
+    {
+        Requirements::customScript(<<<JS
 
  			(function($) {
 
@@ -41,9 +42,8 @@ class GoogleSuggestField extends FormField {
 JS
 );
 
-		$this->addExtraClass('text');
+        $this->addExtraClass('text');
 
-		return parent::Field($properties);
-
-	}
+        return parent::Field($properties);
+    }
 }
