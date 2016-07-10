@@ -39,6 +39,8 @@ class SeoSiteConfigExtension extends DataExtension
         $path = $foundpath['main'];
         if (file_exists($path)) {
             $templatecode = file_get_contents($path);
+        } else {
+            throw new Exception('Failed to identify path');
         }
         if ($templatecode && strpos($templatecode, '<title>')) {
             $templatetag = explode('<title>', $templatecode);
