@@ -35,7 +35,6 @@
 
 	// Check if the edit form is what we think it is (or a gridfield)
 	function set_edit_form_id() {
-		console.log($("#" + edit_form_id ).length);
 		if (!$("#" + edit_form_id ).length) {
 			edit_form_id = alt_edit_form_id;
 		}
