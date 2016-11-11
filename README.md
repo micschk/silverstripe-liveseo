@@ -141,7 +141,7 @@ class YourSEODataObject extends DataObject
 ### Add SEO SeoSiteTreeExtension as an extension to your DataObject
 We now need to extend your current object to utilise the SeoSiteTreeExtension, you can do this in two ways:
 
-1. Add extension directly to your object:
+#### Add extension directly to your object:
 
 ```php
 
@@ -158,7 +158,7 @@ class YourSEODataObject extends DataObject
 }
 ```
 
-2. Add extension via config.yml
+#### Add extension via config.yml
 
 ```
 YourSEODataObject:
