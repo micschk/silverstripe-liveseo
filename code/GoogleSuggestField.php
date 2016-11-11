@@ -10,14 +10,21 @@ class GoogleSuggestField extends FormField
         Requirements::customScript(<<<JS
 
  			(function($) {
+				var edit_form_id = "Form_EditForm";
+				var alt_edit_form_id = "Form_ItemEditForm";
 
 				$.entwine('ss', function($){
 
 					$('.cms-edit-form input#Form_EditForm_{$this->getName()}').entwine({
 						// Constructor: onmatch
 						onmatch : function() {
+							if (!$("#" + edit_form_id ).length) {
+								edit_form_id = alt_edit_form_id;
+							}
 
-							$( "#Form_EditForm_{$this->getName()}" ).autocomplete({
+							console.log("#" + edit_form_id + "_{$this->getName()}");
+
+							$( "#" + edit_form_id + "_{$this->getName()}" ).autocomplete({
 								source: function( request, response ) {
 									$.ajax({
 									  url: "//suggestqueries.google.com/complete/search",
