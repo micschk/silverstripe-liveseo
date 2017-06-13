@@ -45,7 +45,7 @@ as to whether or not images or links exist.
 * Bart van Irsel (Nickname: hubertusanton) [Dertig Media](http://www.30.nl)
 * Michael van Schaik (Nickname: micschk) [Restruct](http://restruct.nl)
 
-## Notes:##
+## Notes
 
 Template tags:
 - $SeoBreadcrumbs -> added microdata for breadcrumbs in SERP
