@@ -45,7 +45,7 @@ as to whether or not images or links exist.
 * Bart van Irsel (Nickname: hubertusanton) [Dertig Media](http://www.30.nl)
 * Michael van Schaik (Nickname: micschk) [Restruct](http://restruct.nl)
 
-##Notes:##
+## Notes:##
 
 Template tags:
 - $SeoBreadcrumbs -> added microdata for breadcrumbs in SERP
@@ -53,17 +53,17 @@ Template tags:
 Todo:
 - resolve conflicts / update de.yml & es.yml
 
-##Contributing:##
+## Contributing
 
 Pull requests are welcome for improvements & translations.
 
-##Installation:##
-Simply clone or download this repository, copy it into your SilverStripe installation folder, then run `dev/build`.
+## Installation
+Simply clone or download this repository, copy it into your SilverStripe installation folder, then run `dev/build?flush=all`.
 
-###Composer:###
+### Composer
 
 ```
-composer require: "micschk/silverstripe-seo": "dev-master"
+composer require: "micschk/silverstripe-liveseo": "dev-master"
 ```
 
 ## Requirements
@@ -91,9 +91,6 @@ Please use tag 1.1 in old sites with the old config and tag 2.0 for new projects
 
 ![ScreenShot](https://raw.github.com/hubertusanton/silverstripe-seo/master/images/screen2.png)
 ![ScreenShot](https://raw.github.com/hubertusanton/silverstripe-seo/master/images/screen3.png)
-
-## Installation
-Place the module dir in your website root and run /dev/build?flush=all
 
 ## Using custom DataObjects
 If you have created a custom data object that you want to make SEO friendly (for examnple Products in
