@@ -51,21 +51,14 @@ class SeoSiteTreeExtension extends SiteTreeExtension
                 Config::inst()->get("SeoSiteTreeExtension", "excluded_page_types"))) {
             return;
         }
-
-        Requirements::css(SEO_DIR.'/css/seo.css');
-        //Requirements::javascript(SEO_DIR.'/javascript/seo.js');
-
         // Get title template
         $sc = SiteConfig::current_site_config();
+        
         if ($sc->SEOTitleTemplate) {
             $TitleTemplate = $sc->SEOTitleTemplate;
         } else {
-            $TitleTemplate = "page_title + ' &raquo; ' + siteconfig_title";
+            $TitleTemplate = "";
         }
-
-        $jsvars = array(
-            "TitleTemplate" => $TitleTemplate,
-        );
 
         // check if the page being checked provides images and links information
         $providedInfoFIeld = null;
@@ -94,8 +87,6 @@ class SeoSiteTreeExtension extends SiteTreeExtension
             }
         }
 
-        Requirements::javascriptTemplate(SEO_DIR.'/javascript/seo.js', $jsvars);
-
         // lets create a new tab on top
         $fields->addFieldsToTab('Root.SEO', array(
             LiteralField::create('googlesearchsnippetintro',
@@ -104,6 +95,8 @@ class SeoSiteTreeExtension extends SiteTreeExtension
                     '<div id="google_search_snippet"></div>'),
             LiteralField::create('siteconfigtitle',
                     '<div id="ss_siteconfig_title">' . $this->owner->getSiteConfig()->Title . '</div>'),
+            LiteralField::create('seotitletemplate',
+                    '<div id="ss_seo_title_template">' . $TitleTemplate . '</div>'),
         ));
 
         // move Metadata field from Root.Main to SEO tab for visualising direct impact on search result
