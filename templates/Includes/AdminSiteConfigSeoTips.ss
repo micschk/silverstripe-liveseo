@@ -3,25 +3,35 @@
 	<div class="middleColumn">
 
 		<ul class="SEOadvice">
-			<% if not $GSMactive %>
-			<li><span class="seo_score_img bad"></span> De Google Sitemap Module is niet geïnstalleerd
-			<% else %>
-			<li><span class="seo_score_img good"></span> Google Sitemap is actief
-			<% end_if %>
+			<li>
+				<% if not $GSMactive %>
+					<span class="seo_score_img bad"></span>
+					<%t SEO.GoogleSitemapModuleInstall "De Google Sitemap Module is niet geïnstalleerd" %>
+				<% else %>
+					<span class="seo_score_img good"></span>
+					<%t SEO.GoogleSitemapModuleActive "Google Sitemap is actief" %>
+				<% end_if %>
+			</li>
 
-			<% if not $GSMping %>
-			<li><span class="seo_score_img bad"></span> Google wordt niet ingelicht wanneer nieuwe pagina's gepubliceerd worden (configureer google_notification_enabled)</td>
+			<li>
+				<% if not $GSMping %>
+					<span class="seo_score_img bad"></span>
+					<%t SEO.GoogleNotificationInactive "Google wordt niet ingelicht wanneer nieuwe pagina's gepubliceerd worden (configureer google_notification_enabled)" %>
+				<% else %>
+					<span class="seo_score_img good"></span>
+					<%t SEO.GoogleNotificationActive "Google wordt ingelicht wanneer nieuwe pagina's worden gepubliceerd" %>
+				<% end_if %>
 			</li>
-			<% else %>
-			<li><span class="seo_score_img good"></span> Google wordt ingelicht wanneer nieuwe pagina's worden gepubliceerd</li>
-			<% end_if %>
-			
-			<% if not $RedirActive %>
-			<li>$RedirMactive<span class="seo_score_img poor"></span> Installeer eventueel de <a href="https://github.com/silverstripe-labs/silverstripe-redirectedurls" target="_blank">Redirected URLs module</a> om handmatig redirects in te kunnen stellen. <br />Het CMS verwijst zelf al pagina's door waarvan de URL is aangepast. <br />Met deze module kunnen ook oude URLs of verkorte URLs worden doorverwezen. </td>
+
+			<li>
+				<% if not $RedirActive %>
+					<span class="seo_score_img poor"></span>
+					<%t SEO.RedirectsModuleInactive "Installeer eventueel de redirected URLs module om handmatig redirects in te kunnen stellen." %>
+				<% else %>
+					<span class="seo_score_img good"></span>
+					<%t SEO.RedirectsModuleActive "Redirected URLs module is actief. Hiermee kunnen handmatig redirects worden ingesteld." %>
+				<% end_if %>
 			</li>
-			<% else %>
-			<li><span class="seo_score_img good"></span> Redirected URLs module is actief. <br />Hiermee kunnen handmatig redirects worden ingesteld. Het CMS verwijst zelf al pagina's door waarvan de URL is aangepast. <br />Met deze module kunnen ook oude URLs of verkorte URLs worden doorverwezen.</li>
-			<% end_if %>
 		</ul>
 
 	</div>
