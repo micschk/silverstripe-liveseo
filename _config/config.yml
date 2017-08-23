@@ -1,6 +1,14 @@
 ---
 Name: 'seoextensions'
 ---
+
+# Include required CSS and JS
+LeftAndMain:
+  extra_requirements_css:
+    - liveseo/css/seo.css
+  extra_requirements_javascript:
+    - liveseo/javascript/seo.js
+
 SiteTree:
   extensions:
     - 'SeoSiteTreeExtension'

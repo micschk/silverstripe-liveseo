@@ -79,7 +79,10 @@
 			siteconfig_title = $('#ss_siteconfig_title').html();
 
 			// build google search preview
-			var google_search_title = $TitleTemplate;
+			var google_search_title = $("#ss_seo_title_template").val();
+			if(google_search_title.length	== 0) {
+				google_search_title = page_title + " &raquo; " + siteconfig_title;
+			}
 			var google_search_url = page_url_basehref + page_url_segment;
 			var google_search_description = page_metadata_description;
 

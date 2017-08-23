@@ -30,8 +30,9 @@
 	font-weight: normal;
 }
 
-/* hidden literal field for site title */
-#ss_siteconfig_title {
+/* hidden literal fields for site title */
+#ss_siteconfig_title,
+#ss_seo_title_template {
 	display: none;
 }
 
@@ -86,9 +87,7 @@ ul#seo_score_tips li {
 	background-color: green;
 	color: white;
 	padding: 1px 6px;
-	margin-top: 2px;
-	-webkit-border-radius: 3px; 
-	-moz-border-radius: 3px; 
+	margin-top: 2px; 
 	border-radius: 3px; 
 }
 .subjtest_no {
