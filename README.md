@@ -33,6 +33,10 @@ composer require: "micschk/silverstripe-liveseo": "dev-master"
 
 * SilverStripe 3.*
 
+## Documantation
+
+[View detailed documentation](docs/en/index.md)
+
 ## Notes
 
 Template tags:
