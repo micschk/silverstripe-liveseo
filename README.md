@@ -68,7 +68,7 @@ composer require: "micschk/silverstripe-liveseo": "dev-master"
 
 ## Requirements
 
-* SilverStripe 3.1
+* SilverStripe 3.*
 
 ## Documentation
 
@@ -85,7 +85,6 @@ By default every class extending Page will use the SEO module.
 Caution: The new master branch is not compatible with old releases see [this pull request](https://github.com/hubertusanton/silverstripe-seo/pull/10) from [jonom](https://github.com/jonom) (thanks!).
 
 Please use tag 1.1 in old sites with the old config and tag 2.0 for new projects, but updating to 2.0 will also fix google suggest and has some other fixes.
-
 
 ## Screenshots
 
@@ -187,7 +186,7 @@ This module is published under BSD 2-clause license, although these are not in t
 
 http://www.opensource.org/licenses/BSD-2-Clause
 
-Copyright (c) 2013, Bart van Irsel
+Copyright (c) 2016, Bart van Irsel
 
 All rights reserved.
 
