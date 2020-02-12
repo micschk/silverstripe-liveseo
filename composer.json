@@ -1,7 +1,7 @@
 {
 	"name": "micschk/silverstripe-liveseo",
 	"description": "SEO optimizations module for Silverstripe",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"homepage": "http://github.com/micschk/silverstripe-liveseo",
 	"keywords": ["silverstripe", "seo", "meta", "metatitle"],
 	"authors": [
@@ -19,15 +19,10 @@
 		"issues": "http://github.com/micschk/silverstripe-liveseo/issues"
 	},
 	"require": {
-		"silverstripe/framework": "~3.1",
-		"silverstripe/cms": "~3.1"
+		"silverstripe/framework": "^4.2",
+		"silverstripe/cms": "^4.2"
 	},
 	"extra": {
-		"installer-name": "liveseo",
-		"replaces": "seo",
-		"screenshots": [
-			"images/screen2.png",
-			"images/screen3.png"
-		]
+		"replaces": "seo"
 	}
 }
