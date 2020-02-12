@@ -1,4 +1,10 @@
 <?php
+
+namespace Restruct\Silverstripe\LiveSEO;
+
+use FormField;
+use Requirements;
+
 /**
  * Field which gets suggestions from google search
  */

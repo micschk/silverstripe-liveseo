@@ -1,4 +1,11 @@
 <?php
+
+namespace Restruct\Silverstripe\LiveSEO;
+
+use DataExtension;
+use FieldList;
+use TextareaField;
+
 /**
  * SeoSiteConfig
  * adds site-wide settings for SEO

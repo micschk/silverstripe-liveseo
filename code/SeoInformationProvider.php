@@ -1,5 +1,10 @@
 <?php
 
+namespace Restruct\Silverstripe\LiveSEO;
+
+
+
+
 /**
  * Optionally provide extra information for the SEO plugin to use to calculate a score from JS
  */

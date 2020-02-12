@@ -1,5 +1,27 @@
 <?php
 
+namespace Restruct\Silverstripe\LiveSEO;
+
+use SiteTreeExtension;
+use FieldList;
+use Config;
+use SiteConfig;
+use ReflectionClass;
+use LiteralField;
+use TabSet;
+use TextField;
+use TextareaField;
+use HiddenField;
+use HeaderField;
+use CheckboxField;
+use SSViewer;
+use ArrayData;
+use ArrayList;
+use i18n;
+use SiteTree;
+use RootURLController;
+
+
 class SeoSiteTreeExtension extends SiteTreeExtension
 {
 

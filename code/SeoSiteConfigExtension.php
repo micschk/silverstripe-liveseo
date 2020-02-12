@@ -1,5 +1,18 @@
 <?php
 
+namespace Restruct\Silverstripe\LiveSEO;
+
+use DataExtension;
+use FieldList;
+use Config;
+use SS_Object;
+use ArrayData;
+use LiteralField;
+use SS_TemplateLoader;
+use Exception;
+use TextField;
+
+
 class SeoSiteConfigExtension extends DataExtension
 {
 

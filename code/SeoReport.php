@@ -1,4 +1,10 @@
 <?php
+
+namespace Restruct\Silverstripe\LiveSEO;
+
+use SS_Report;
+use Page;
+
 class SeoReport extends SS_Report
 {
     public function title()
