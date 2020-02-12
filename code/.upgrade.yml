@@ -1,0 +1,7 @@
+mappings:
+  SeoSiteConfigExtension: Restruct\Silverstripe\LiveSEO\SeoSiteConfigExtension
+  SeoSiteConfig: Restruct\Silverstripe\LiveSEO\SeoSiteConfig
+  SeoSiteTreeExtension: Restruct\Silverstripe\LiveSEO\SeoSiteTreeExtension
+  SeoInformationProvider: Restruct\Silverstripe\LiveSEO\SeoInformationProvider
+  GoogleSuggestField: Restruct\Silverstripe\LiveSEO\GoogleSuggestField
+  SeoReport: Restruct\Silverstripe\LiveSEO\SeoReport
