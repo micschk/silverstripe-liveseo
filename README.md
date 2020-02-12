@@ -1,5 +1,7 @@
 # Live SEO optimizations for Silverstripe
 
+*NOTE:* This branch is for Silverstripe 4 support, if you are looking for Silvestripe 3, use the "2" branch.
+
 This module was largely rewritten from hubertusanton/silverstripe-seo to provide real-time feedback & SEO tips to CMS editors. Where the original module handles this in php (on page save), this module's feedback logic was written in javascript, hence 'Live SEO'. For the time being we have decided to let both modules co-exist, as they both do the job just fine, and this allows developers to pick the version that suits them best (php or javascript).
 
 - Real-time in-CMS SEO page analysis with tips & score (moved to js, no need to save/refresh)
