@@ -24,5 +24,10 @@
 	},
 	"extra": {
 		"replaces": "seo"
+	},
+	"autoload": {
+		"psr-4": {
+			"Restruct\\Silverstripe\\LiveSEO\\": "src/"
+		}
 	}
 }
