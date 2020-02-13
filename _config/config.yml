@@ -1,26 +1,32 @@
 ---
 Name: 'seoextensions'
 ---
-
 # Include required CSS and JS
 LeftAndMain:
   extra_requirements_css:
-    - liveseo/css/seo.css
+    - micschk/silverstripe-liveseo:client/css/seo.css
   extra_requirements_javascript:
-    - liveseo/javascript/seo.js
+    - micschk/silverstripe-liveseo:client/liveseo/js/seo.js
 
 SiteTree:
   extensions:
-    - 'SeoSiteTreeExtension'
+    - Restruct\Silverstripe\LiveSEO\SeoObjectExtension
 SiteConfig:
   extensions:
-    - 'SeoSiteConfigExtension'
-
-# optimize some other modules
-GoogleSitemap:
-  google_notification_enabled: true
-  
+    - Restruct\Silverstripe\LiveSEO\SeoSiteConfig
 # Example of how to exclude extra page types from showing the SEO tab:
 # SeoSiteTreeExtension:
 #   excluded_page_types:
 #     - 'SomePage'
+
+---
+Name: 'seositemaps'
+Only:
+  moduleexists: 'wilr/campaign-admin'
+---
+# optimize SiteMaps module (if installed)
+Wilr\GoogleSitemaps\GoogleSitemap:
+  enabled: true
+  objects_per_sitemap: 1000
+  google_notification_enabled: true
+  use_show_in_search: true

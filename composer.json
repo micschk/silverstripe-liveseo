@@ -19,11 +19,16 @@
 		"issues": "http://github.com/micschk/silverstripe-liveseo/issues"
 	},
 	"require": {
-		"silverstripe/framework": "^4.2",
-		"silverstripe/cms": "^4.2"
+		"silverstripe/framework": "^4"
 	},
 	"extra": {
-		"replaces": "seo"
+        "expose": [
+            "client"
+        ],
+        "screenshots": [
+            "client/images/screen2.png",
+            "client/images/screen3.png"
+        ]
 	},
 	"autoload": {
 		"psr-4": {

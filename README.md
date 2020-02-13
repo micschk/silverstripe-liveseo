@@ -4,22 +4,15 @@
 
 This module was largely rewritten from hubertusanton/silverstripe-seo to provide real-time feedback & SEO tips to CMS editors. Where the original module handles this in php (on page save), this module's feedback logic was written in javascript, hence 'Live SEO'. For the time being we have decided to let both modules co-exist, as they both do the job just fine, and this allows developers to pick the version that suits them best (php or javascript).
 
-- Real-time in-CMS SEO page analysis with tips & score (moved to js, no need to save/refresh)
-- Configurable Title template for search snippet visualisation (from within siteconfig)
-- Multiple keyword support in no particular order (eg "dogs drinking beer" = "drinking my beer while watching the dog")
-- Checks & suggests installs of other modules that are good for SEO (GoogleSitemap)
-- Auto-set GoogleSitemap::google_notification_enabled(true) if available
-- Added support for Facebook & Google+ author markup
-- Added support for in-page meta robots settings
-- Added some additional tests & tips from Yoast's WP SEO plugin
-- Largely based on Bart's/30's Silverstripe SEO plugin (basically half of this plugin)
-- Re-adds the 'MetaTitle' field that was removed in SilverStripe 3.1 (thanks to Loz Calver)
-
 ## Maintainer Contacts
 
 * Bart van Irsel (Nickname: hubertusanton) [Dertig Media](http://www.30.nl)
 * Michael van Schaik (Nickname: micschk) [Restruct](http://restruct.nl)
 * Morven Lewis-Everley (Nickname: mo) [ilateral](http://ilateralweb.co.uk)
+
+## Requirements
+
+* SilverStripe 4.*
 
 ## Installation
 
@@ -31,13 +24,27 @@ Simply clone or download this repository, copy it into your SilverStripe install
 composer require: "micschk/silverstripe-liveseo": "dev-master"
 ```
 
-## Requirements
+## Documentation
 
-* SilverStripe 3.*
+This module helps the administrator of the Silverstripe website in getting good results in search engines.
+A rating of the SEO of the current page helps the website editor creating good content around a subject
+of the page which can be defined using a google suggest field.
 
-## Documantation
+The fields for meta data in pages will be moved to a SEO part by this module.
+This is done for giving a realtime preview on the google search result of the page. 
+
+In seo.yml config file you can specify which classes will NOT use the module. 
+By default every class extending Page will use the SEO module.
+Caution: The new master branch is not compatible with old releases see [this pull request](https://github.com/hubertusanton/silverstripe-seo/pull/10) from [jonom](https://github.com/jonom) (thanks!).
+Please use tag 1.1 in old sites with the old config and tag 2.0 for new projects, but updating to 2.0 will also fix google suggest and
+has some other fixes.
 
 [View detailed documentation](docs/en/index.md)
+
+## Screenshots
+
+![ScreenShot](1.png)
+![ScreenShot](2.png)
 
 ## Notes
 

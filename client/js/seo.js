@@ -1,10 +1,8 @@
 (function($) {
-
 	var edit_form_id = "Form_EditForm";
 	var alt_edit_form_id = "Form_ItemEditForm";
 
 	$.entwine('ss', function($){
-
 		$('input[name="MetaTitle"], textarea[name="MetaDescription"], input[name="SEOPageSubject"]').entwine({
 			// Constructor: onmatch
 			onmatch: function(){
@@ -24,7 +22,6 @@
 				calc_score_n_tips();
 			},
 		});
-
 	});
 	
 	// when switching tabs from editing content to SEO tab, update;
@@ -41,13 +38,11 @@
 	}
 	
 	function calc_score_n_tips() {
-
 		// calculate score & set tips;
 		var score = calc_score();
 
 		// visualise with star rating;
 		set_score(score);
-
 	}
 
 	function set_score( score ){
@@ -68,13 +63,9 @@
 	}
 
 	function set_preview_google_search_result() {
-
 		var page_url_basehref = $('input[name="URLSegment"]').attr('data-prefix'),
 			page_url_segment = $('input[name="URLSegment"]').val(),
 			page_title       = ($('#' + edit_form_id + '_MetaTitle').val() || $('#' + edit_form_id + '_Title').val()),
-			page_menutitle  = $('#' + edit_form_id + '_MenuTitle').val(),
-			page_content     = $('textarea#' + edit_form_id + '_Content').val(),
-			page_metadata_title = $('#' + edit_form_id + '_MetaTitle').val(),
 			page_metadata_description = $('#' + edit_form_id + '_MetaDescription').val(),
 			siteconfig_title = $('#ss_siteconfig_title').html();
 
@@ -85,8 +76,8 @@
 			}
 			var google_search_url = page_url_basehref + page_url_segment;
 			var google_search_description = page_metadata_description;
-
 			var search_result_html = '';
+
 			search_result_html += '<h3>' + google_search_title + '</h3>';
 			search_result_html += '<div class="google_search_url">' + google_search_url + '</div>';
 			search_result_html += '<p>' + google_search_description + '</p>';
@@ -107,7 +98,6 @@
 	};
 
 	function calc_score(){
-
 		// get references to all relevant form fields;
 		var SEOPageSubject = $('input[name="SEOPageSubject"]').val().toLowerCase();
 		var PageTitle = $('input[name="Title"]').val().toLowerCase();
@@ -286,7 +276,6 @@
 		}
 		
 		return score;
-		
 	}
 	
 })(jQuery);
