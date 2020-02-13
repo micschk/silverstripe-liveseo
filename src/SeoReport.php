@@ -2,10 +2,10 @@
 
 namespace Restruct\Silverstripe\LiveSEO;
 
-use SS_Report;
 use Page;
+use SilverStripe\Reports\Report;
 
-class SeoReport extends SS_Report
+class SeoReport extends Report
 {
     public function title()
     {

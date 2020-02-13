@@ -1,22 +1,28 @@
 <?php
 
-namespace Hubertusanton\SilverStripeSeo;
+namespace Restruct\Silverstripe\LiveSEO;
 
-use SilverStripe\View\ArrayData;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\TextareaField;
-use SilverStripe\Forms\LiteralField;
-use SilverStripe\Core\Config\Config;
-use SilverStripe\ORM\DataExtension;
-use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\View\Requirements;
-use SilverStripe\Core\Convert;
-use SilverStripe\Control\Director;
 use DOMDocument;
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\CMS\Controllers\RootURLController;
+use ReflectionClass;
+use SilverStripe\Core\Convert;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\SSViewer;
+use SilverStripe\View\ArrayData;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Control\Director;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\HiddenField;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\CMS\Controllers\RootURLController;
+use Restruct\Silverstripe\LiveSEO\SeoInformationProvider;
 
 /**
  * SeoObjectExtension extends SiteTree with functionality for helping content authors to
@@ -46,9 +52,21 @@ class SeoObjectExtension extends DataExtension
     private static $use_webmaster_tag = true;
 
     private static $db = [
-        'SEOPageSubject' => 'Varchar(256)'
-    ];
+        'MetaTitle' => 'Varchar(255)',
+        'SEOPageSubject' => 'Varchar(255)',
+        'SEOPageScore' => 'Int',
 
+        'MetaRobotsNoIndex' => "Boolean",
+        'MetaRobotsNoFollow' => "Boolean",
+        'MetaRobotsNoCache' => "Boolean",
+        'MetaRobotsNoSnippet' => "Boolean",
+
+        'SEOFBdescription' => 'Text',
+        'SEOFBPublisherlink' => 'Varchar(255)',
+        'SEOFBAuthorlink' => 'Varchar(255)',
+        'SEOGplusAuthorlink' => 'Varchar(255)',
+        'SEOGplusPublisherlink' => 'Varchar(255)'
+    ];
 
     public $score_criteria = array(
         'pagesubject_defined' => false,
@@ -69,7 +87,6 @@ class SeoObjectExtension extends DataExtension
 
     public $seo_score_tips = '';
 
-
     /**
      * getSEOScoreTips.
      * Get array of tips translated in current locale
@@ -79,7 +96,7 @@ class SeoObjectExtension extends DataExtension
      */
     public function getSEOScoreTips() {
 
-        $score_criteria_tips = array(
+        return array(
             'pagesubject_defined' => _t('SEO.SEOScoreTipPageSubjectDefined', 'Page subject is not defined for page'),
             'pagesubject_in_title' => _t('SEO.SEOScoreTipPageSubjectInTitle', 'Page subject is not in the title of this page'),
             'pagesubject_in_firstparagraph' => _t('SEO.SEOScoreTipPageSubjectInFirstParagraph', 'Page subject is not present in the first paragraph of the content of this page'),
@@ -93,12 +110,7 @@ class SeoObjectExtension extends DataExtension
             'images_have_alt_tags' => _t('SEO.SEOScoreTipImagesHaveAltTags', 'All images on this page do not have alt tags'),
             'images_have_title_tags' => _t('SEO.SEOScoreTipImagesHaveTitleTags', 'All images on this page do not have title tags')
         );
-
-        return $score_criteria_tips;
     }
-
-
-
 
     /**
      * updateCMSFields.
@@ -118,38 +130,128 @@ class SeoObjectExtension extends DataExtension
             }
         }
 
-        Requirements::css('hubertusanton/silverstripe-seo:client/css/seo.css');
-        Requirements::javascript('hubertusanton/silverstripe-seo:client/js/seo.js');
-
         // better do this below in some init method? :
         $this->getSEOScoreCalculation();
         $this->setSEOScoreTipsUL();
 
+        // Get title template
+        $sc = SiteConfig::current_site_config();
+        
+        if ($sc->SEOTitleTemplate) {
+            $TitleTemplate = $sc->SEOTitleTemplate;
+        } else {
+            $TitleTemplate = "";
+        }
+
         // lets create a new tab on top
-        $fields->addFieldsToTab('Root.SEO', array(
-            LiteralField::create('googlesearchsnippetintro', '<h3>' . _t('SEO.SEOGoogleSearchPreviewTitle', 'Preview google search') . '</h3>'),
-            LiteralField::create('googlesearchsnippet', '<div id="google_search_snippet"></div>'),
-            LiteralField::create('siteconfigtitle', '<div id="ss_siteconfig_title">' . $this->owner->getSiteConfig()->Title . '</div>'),
-
-        ));
-
-        // move Metadata field from Root.Main to SEO tab for visualising direct impact on search result
-
-        $fields->removeFieldFromTab('Root.Main', 'Metadata');
-
-        $fields->addFieldsToTab('Root.SEO', array(
-                TextareaField::create("MetaDescription", $this->owner->fieldLabel('MetaDescription'))
-                    ->setRightTitle(
-                        _t(
-                            'SiteTree.METADESCHELP',
-                            "Search engines use this content for displaying search results (although it will not influence their ranking)."
-                        )
-                    )
-                    ->addExtraClass('help')
+        $fields->addFieldsToTab(
+            'Root.SEO',
+            array(
+                HeaderField::create(
+                    'googlesearchsnippetintro',
+                    _t('SEO.SEOGoogleSearchPreviewTitle', 'Preview google search'),
+                    3
+                ),
+                LiteralField::create(
+                    'googlesearchsnippet',
+                    '<div id="google_search_snippet"></div>'
+                ),
+                LiteralField::create(
+                    'siteconfigtitle',
+                    '<div id="ss_siteconfig_title">' . $sc->Title . '</div>'
+                ),
+                LiteralField::create(
+                    'seotitletemplate',
+                    '<div id="ss_seo_title_template">' . $TitleTemplate . '</div>'
+                )
             )
         );
-        $fields->addFieldsToTab('Root.SEO', array(
-                GoogleSuggestField::create("SEOPageSubject", _t('SEO.SEOPageSubjectTitle', 'Subject of this page (required to view this page SEO score)')),
+
+        // move Metadata field from Root.Main to SEO tab for visualising direct impact on search result
+        $fields->removeFieldFromTab('Root.Main', 'Metadata');
+
+        // Create SEO tabs
+        $fields->addFieldToTab("Root.SEO", TabSet::create('Options'));
+        $fields->findOrMakeTab('Root.SEO.Options.Meta', _t('SEO.SEOMetaData', 'Metadata'));
+        $fields->findOrMakeTab('Root.SEO.Options.Social', _t('SEO.Social', 'Social'));
+        $fields->findOrMakeTab('Root.SEO.Options.Advanced', _t('SEO.Advanced', 'Advanced'));
+
+        // check if the page being checked provides images and links information
+        $providedInfoField = null;
+
+        $class = new ReflectionClass($this->getOwner());
+        if ($class->implementsInterface(SeoInformationProvider::class)) {
+            $links = $this->getOwner()->getLinksForSeo();
+            $images = $this->getOwner()->getImagesForSeo();
+
+            // if we have images or links add an extra div containing info in data attributes
+            $info = array();
+            if (sizeof($links) > 0) {
+                $info['data-has-links'] = true;
+            }
+            if (sizeof($images) > 0) {
+                $info['data-has-images'] = true;
+            }
+
+            if (sizeof($info) > 0) {
+                $html = '<div id="providedInfo" ';
+                foreach ($info as $key => $val) {
+                    $html .= $key.'='.$val;
+                }
+                $html .= ">INFO HERE</div>";
+                $providedInfoField = new LiteralField('ProvidedSEOInfo', $html);
+            }
+        }
+
+        if ($providedInfoField) {
+            $fields->addFieldToTab(
+                'Root.SEO',
+                $providedInfoField
+            );
+        }
+
+        // ADD metadata fields
+        $fields->addFieldsToTab(
+            'Root.SEO.Options.Meta',
+            array(
+                // METATITLE (re-add)
+                TextField::create(
+                    "MetaTitle",
+                    _t('SEO.SEOMetaTitle', 'Meta title')
+                )->setRightTitle(
+                    _t('SEO.SEOMetaTitleHelp',
+                        'Name of the page, search engines use this as title of search results. If unset, the page title will be used.')
+                ),
+                // METADESCR
+                TextareaField::create(
+                    "MetaDescription",
+                    $this->owner->fieldLabel('MetaDescription')
+                )->setRightTitle(
+                    _t('SiteTree.METADESCHELP',
+                        "Search engines use this content for displaying search results (although it will not influence their ranking).")
+                )->addExtraClass('help'),
+                // EXTRAMETA
+                TextareaField::create(
+                    "ExtraMeta",
+                    $this->owner->fieldLabel('ExtraMeta')
+                )->setRightTitle(
+                    _t('SiteTree.METAEXTRAHELP',
+                        "HTML tags for additional meta information. For example &lt;meta name=\"customName\" content=\"your custom content here\" /&gt;")
+                )->addExtraClass('help')
+            )
+        );
+
+        $fields->addFieldsToTab(
+            'Root.SEO',
+            array(
+                HiddenField::create('SEOPageScore', $this->getOwner()->SEOPageScore),
+                GoogleSuggestField::create(
+                    "SEOPageSubject",
+                    _t(
+                        'SEO.SEOPageSubjectTitle',
+                        'Subject of this page (required to view this page SEO score)'
+                    )
+                ),
                 LiteralField::create('', '<div class="message notice"><p>' .
                     _t(
                         'SEO.SEOSaveNotice',
@@ -157,26 +259,52 @@ class SeoObjectExtension extends DataExtension
                     ) . '</p></div>'),
                 LiteralField::create('ScoreTitle', '<h4 class="seo_score">' . _t('SEO.SEOScore', 'SEO Score') . '</h4>'),
                 LiteralField::create('Score', $this->getHTMLStars()),
-                LiteralField::create('ScoreClear', '<div class="score_clear"></div>')
+                LiteralField::create('ScoreClear', '<div class="score_clear"></div>'),
+                LiteralField::create('ScoreTipsTitle', '<h4 class="seo_score">' . _t('SEO.SEOScoreTips', 'SEO Score Tips') . '</h4>'),
+                LiteralField::create('ScoreTips', $this->seo_score_tips)
             )
         );
 
         if ($this->checkPageSubjectDefined()) {
-            $fields->addFieldsToTab('Root.SEO', array(
-                    LiteralField::create('SimplePageSubjectCheckValues', $this->getHTMLSimplePageSubjectTest())
+            $fields->addFieldToTab(
+                'Root.SEO',
+                LiteralField::create(
+                    'SimplePageSubjectCheckValues',
+                    $this->getHTMLSimplePageSubjectTest()
                 )
             );
         }
 
-        if ($this->seo_score < 12) {
-            $fields->addFieldsToTab('Root.SEO', array(
-                    LiteralField::create('ScoreTipsTitle', '<h4 class="seo_score">' . _t('SEO.SEOScoreTips', 'SEO Score Tips') . '</h4>'),
-                    LiteralField::create('ScoreTips', $this->seo_score_tips)
-                )
-            );
-        }
+        $fields->addFieldsToTab(
+            'Root.SEO.Options.Social',
+            array(
+                // Facebook/social stuff
+                TextField::create("SEOFBdescription", _t('SEO.SEOFBdescription', 'Facebook description'))
+                    ->setRightTitle(_t('SEO.SEOFBdescriptionHelp', 'Wanneer je niet de metabeschrijving wil gebruiken voor het delen van berichten op Facebook, maar een andere omschrijving wil, schrijf het dan hier.')),
+                // FB
+                TextField::create("SEOFBAuthorlink", _t('SEO.SEOFBAuthorlink', 'Facebook author'))
+                    ->setRightTitle(_t('SEO.SEOFBAuthorlinkHelp', 'Author Facebook PROFILE URL (incl. http://)')),
+                TextField::create("SEOFBPublisherlink", _t('SEO.SEOFBPublisherlink', 'Facebook publisher'))
+                    ->setRightTitle(_t('SEO.SEOFBPublisherlinkHelp', 'Publisher Facebook PAGE URL (incl. http://)')),
+                // Gplus
+                TextField::create("SEOGplusAuthorlink", _t('SEO.SEOGplusAuthorlink', 'Google+ author'))
+                    ->setRightTitle(_t('SEO.SEOGplusAuthorlinkHelp', 'Author Google+ PROFILE URL (incl. http://)')),
+                TextField::create("SEOGplusPublisherlink", _t('SEO.SEOGplusPublisherlink', 'Google+ publisher'))
+                    ->setRightTitle(_t('SEO.SEOGplusPublisherlinkHelp', 'Publisher Google+ PAGE URL (incl. http://)'))
+            )
+        );
 
-
+        $fields->addFieldsToTab(
+            'Root.SEO.Options.Advanced',
+            array(
+                HeaderField::create('RobotsTitle', _t('SEO.SEORobotSettings', 'Page settings for search engines'), 4),
+                CheckboxField::create('MetaRobotsNoIndex', _t('SEO.MetaRobotsNoIndex', 'Prevent indexing this page')),
+                CheckboxField::create('MetaRobotsNoFollow', _t('SEO.MetaRobotsNoFollow', 'Prevent following any links from this page')),
+                CheckboxField::create('MetaRobotsNoCache', _t('SEO.MetaRobotsNoCache', 'Prevent caching a version of this page')),
+                CheckboxField::create('MetaRobotsNoSnippet',
+                        _t('SEO.MetaRobotsNoSnippet', 'Prevent showing a snippet of this page in the search results (also prevents caching)')),
+            )
+        );
     }
 
     /**
@@ -213,28 +341,41 @@ class SeoObjectExtension extends DataExtension
         return $html;
     }
 
-    /* MetaTags
-    *  Hooks into MetaTags SiteTree method and adds MetaTags for
-    *  Sharing of this page on Social Media (Facebook / Google+)
+    /*
+    * MetaTags
+    * Hooks into MetaTags SiteTree method and adds MetaTags for
+    * Sharing of this page on Social Media (Facebook / Google+)
     */
-    public function MetaTags(&$tags) {
+    public function MetaTags(& $tags)
+    {
+        $extraMeta = $this->owner->renderWith('Includes\SeoMeta');
+        $tags .= $extraMeta;
 
-        $siteConfig = SiteConfig::current_site_config();
-
-        // facebook OpenGraph
-        /*
-        $tags .= '<meta property="og:locale" content="' . i18n::get_locale() . '" />' . "\n";
-        $tags .= '<meta property="og:title" content="' . $this->owner->Title . '" />' . "\n";
-        $tags .= '<meta property="og:description" content="' . $this->owner->MetaDescription . '" />' . "\n";
-        $tags .= '<meta property="og:url" content=" ' . $this->owner->AbsoluteLink() . ' " />' . "\n";
-        $tags .= '<meta property="og:site_name" content="' . $siteConfig->Title . '" />' . "\n";
-        $tags .= '<meta property="og:type" content="article" />' . "\n";
-        */
-        //$tags .= '<meta property="og:image" content="" />' . "\n";
-
-        if (Config::inst()->get('SeoObjectExtension', 'use_webmaster_tag')) {
-            $tags .= $siteConfig->GoogleWebmasterMetaTag . "\n";
+        // TODO: move these extra HTTP headers to controller & use Silverstripe request object?
+        // eg: $this->owner->request->addHeader('X-test','value');
+        header('Link: <'.$this->owner->AbsoluteLink().'>; rel="canonical"');
+        if ($seorobotsdirective = $this->SEOMetaRobotsSettings()) {
+            header('X-Robots-Tag: '.$seorobotsdirective);
         }
+    }
+
+    public function SEOMetaRobotsSettings()
+    {
+        $robots = array();
+        if (!$this->owner->MetaRobotsNoIndex && !$this->owner->MetaRobotsNoFollow
+                && !$this->owner->MetaRobotsNoCache && !$this->owner->MetaRobotsNoSnippet) {
+            return false;
+        } // else return correct meta robots settings;
+        $this->owner->MetaRobotsNoIndex ? $robots[] = 'noindex' : $robots[] = 'index';
+        $this->owner->MetaRobotsNoFollow ? $robots[] = 'nofollow' : $robots[] = 'follow';
+        if ($this->owner->MetaRobotsNoCache) {
+            $robots[] = 'noarchive, nocache';
+        }
+        if ($this->owner->MetaRobotsNoSnippet) {
+            $robots[] = 'nosnippet';
+        }
+
+        return implode(', ', $robots);
     }
 
     /**
@@ -275,7 +416,6 @@ class SeoObjectExtension extends DataExtension
             'Pages' => new ArrayList(array_reverse($pages))
         ))));
     }
-
 
     /**
      * getHTMLSimplePageSubjectTest.
@@ -336,7 +476,6 @@ class SeoObjectExtension extends DataExtension
             }
         }
         $this->seo_score_tips .= '</ul>';
-
     }
 
     /**
@@ -644,14 +783,10 @@ class SeoObjectExtension extends DataExtension
         }
 
         $dom = $this->createDOMDocumentFromHTML($html);
-
         $elements = $dom->getElementsByTagName('img');
+
         return ($elements->length) ? true : false;
-
     }
-
-
-
 
     /**
      * checkContentHasSubtitles.
@@ -673,7 +808,6 @@ class SeoObjectExtension extends DataExtension
         $elements = $dom->getElementsByTagName('h2');
 
         return ($elements->length) ? true : false;
-
     }
 
     /**
