@@ -2,16 +2,16 @@
 Name: 'seoextensions'
 ---
 # Include required CSS and JS
-LeftAndMain:
+SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
     - micschk/silverstripe-liveseo:client/css/seo.css
   extra_requirements_javascript:
-    - micschk/silverstripe-liveseo:client/liveseo/js/seo.js
+    - micschk/silverstripe-liveseo:client/js/seo.js
 
-SiteTree:
+SilverStripe\CMS\Model\SiteTree:
   extensions:
     - Restruct\Silverstripe\LiveSEO\SeoObjectExtension
-SiteConfig:
+SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - Restruct\Silverstripe\LiveSEO\SeoSiteConfig
 # Example of how to exclude extra page types from showing the SEO tab:
