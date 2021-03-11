@@ -14,7 +14,7 @@ class SeoSiteConfigExtension extends DataExtension
         $GSMping = Config::inst()->get('GoogleSitemap', 'google_notification_enabled', Config::INHERITED);
 
         // check for Redirectmanager
-        $RedirActive = Object::has_extension("ContentController", "RedirectedURLHandler");
+        $RedirActive = $this->getOwner()->has_extension(ContentController::class, "RedirectedURLHandler");
 
         //$template = new SSViewer('AdminSiteConfigSeoTips');
         //$seotips = $template->process($this->owner->customise(new ArrayData(array(
